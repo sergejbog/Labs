@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Create a New Balloon Page</title>
+</head>
+<body>
+<header>
+    <th:block th:if="${type == 'add'}"> <!--/*@thymesVar id="type" type="java.lang.String"*/-->
+        <th:h1>Add Balloon</th:h1>
+    </th:block>
+
+    <th:block th:if="${type == 'edit'}"> <!--/*@thymesVar id="type" type="java.lang.String"*/-->
+        <th:h1>Edit Balloon</th:h1>
+    </th:block>
+</header>
+<section>
+    <th:block th:if="${error != null}"> <!--/*@thymesVar id="error" type="mk.ukim.finki.wp.lab.exceptions.BalloonDoesntExistException"*/-->
+        <th:div th:utext="${error}"></th:div>
+    </th:block>
+
+    <!--/*@thymesVar id="manufacturers" type="mk.ukim.finki.wp.lab.model.Manufacturer"*/-->
+    <!--/*@thymesVar id="manufacturer" type="mk.ukim.finki.wp.lab.model.Manufacturer"*/-->
+    <!--/*@thymesVar id="balloon" type="mk.ukim.finki.wp.lab.model.Balloon"*/-->
+
+    <form  th:action="@{/balloons/add}" method="POST">
+        <input id="balloonId" type="hidden" name="balloonId" th:value="(${balloon} != null ? ${balloon.getId()} : '')">
+
+
+        <label for='name'>Name:</label><input required id='name' type='text' name='balloonName'/><br/>
+        <label for='desc'>Description:</label><input required id='desc' type='text' name='balloonDescription' style="width:500px;"/><br/>
+        <label for='manufacturer'>Select Manufacturer:</label>
+        <select name='manufacturerId' id="manufacturer" required >
+            <option th:each="manufacturer : ${manufacturers}" th:value="${manufacturer.getId()}" th:text="${manufacturer.getName()}"></option>
+        </select><br>
+
+        <button type="submit">Submit</button>
+        <br><br>
+        <a href="/balloons">Go Back</a>
+    </form>
+
+
+
+</section>
+</body>
+</html>

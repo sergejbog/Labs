@@ -1,0 +1,42 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Balloon Order page - Welcome and choose a Balloon</title>
+    <style type="text/css">
+        body {
+            width: 800px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Welcome to our Balloon Shop App</h1>
+</header>
+<main>
+    <form th:action="@{/}", method="POST">
+        <h2>Choose balloon color:</h2>
+        <!--/*@thymesVar id="balloons" type="mk.ukim.finki.wp.lab.model.Balloon"*/-->
+        <div th:each="balloon: ${balloons}"><!--/*@thymesVar id="balloon" type="mk.ukim.finki.wp.lab.model.Balloon"*/-->
+            <input type="radio" name="color"  th:value="${balloon.getName()}"  />
+            <th:span th:text="${balloon.getDescription() + ' - ' + balloon.getManufacturer().getName()}"></th:span>
+            <a th:href="@{'/balloons/delete/{id}' (id=${balloon.getId()})}">Delete</a>
+            <a th:href="@{'/balloons/edit-form/{id}' (id=${balloon.getId()})}">Edit</a>
+        </div>
+        <br/>
+        <input type="submit" value="Submit">
+    </form>
+
+    <a th:href="@{'/balloons/add'}">Add a new ballon</a>
+
+    <!--    <h2>Choose balloon color:</h2>-->
+    <!--    <input type="radio" name="color" value="Red Balloon"> Red Balloon<br/>-->
+    <!--    <input type="radio" name="color" value="Green Balloon"> Green Balloon<br/>-->
+    <!--    <input type="radio" name="color" value="Yellow Balloon"> Yellow Balloon<br/>-->
+    <!--    <input type="radio" name="color" value="Blue Balloon"> Blue Balloon<br/>-->
+
+    <!--    <br/>-->
+    <!--    <a href="/selectBalloonSize.html">Submit</a>-->
+</main>
+</body>
+</html>
